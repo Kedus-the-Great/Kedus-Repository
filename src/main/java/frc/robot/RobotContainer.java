@@ -23,10 +23,16 @@ public class RobotContainer {
 
   public static final XboxController driverController = new XboxController(0);
 
+  private Command m_autoCommand;
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
+    driveSubsystem.setDefaultCommand(
+      new JoystickDrive(driveSubsystem)
+    );
   }
 
   /**
@@ -36,10 +42,8 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-driveSubsystem.setDefaultCommand(
-  new JoystickDrive(driveSubsystem)
-);
   }
+
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -48,7 +52,5 @@ driveSubsystem.setDefaultCommand(
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
     return m_autoCommand;
-
-
   }
 }
