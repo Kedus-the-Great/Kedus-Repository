@@ -26,6 +26,6 @@ public class JoystickDrive extends CommandBase {
             rotate = 0;
         } 
 
-        driveSubsystem.drive(throttle*0.35, -rotate*0.35);
+        DriveSubsystem.drive(throttle*0.35, -rotate*0.35);
     }
 }

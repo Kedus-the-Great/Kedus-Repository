@@ -22,4 +22,8 @@ public void setIntakeSpeed(double intakeSpeed) {
 public void stop() {
     setIntakeSpeed(0);
 }
+@Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+  }
 }
