@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -11,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LimelightSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -24,7 +27,8 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   private DriveSubsystem driveSubsytem = RobotContainer.driveSubsystem;
-
+  private WPI_TalonFX leftBackMotor = RobotMap.leftBackDriveMotor;
+  private WPI_TalonFX leftFrontMotor = RobotMap.leftFrontDriveMotor;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -34,6 +38,9 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+
+    LimelightSubsystem.turn_LED_ON();
+
     UsbCamera camera = CameraServer.startAutomaticCapture();
     camera.setResolution(240, 180);
     camera.setFPS(8);
@@ -65,6 +72,14 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     SmartDashboard.putNumber("Left Back Motor Encoder", driveSubsytem.getLeftBackEncoderPosition());
+
+    SmartDashboard.putNumber("Left Back F500 Temp C", leftBackMotor.getTemperature());
+    SmartDashboard.putNumber("Left Front F500 Temp C", leftFrontMotor.getTemperature());
+
+    SmartDashboard.putNumber("Back Left Drive MPS", driveSubsytem.getLeftBackEncoderVelocityMetersPerSecond());
+    SmartDashboard.putBoolean("Is Kedus Drippin?", true);
+    SmartDashboard.putNumber("LIMELIGHT X OFFSET", LimelightSubsystem.getLimelightX());
+    SmartDashboard.putNumber("LIMELIGHT Y OFFSET", LimelightSubsystem.getLimelightY());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

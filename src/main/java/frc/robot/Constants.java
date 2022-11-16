@@ -12,4 +12,13 @@ package frc.robot;
  * <p>It is advised to statically import this class (or one of its inner classes) wherever the
  * constants are needed, to reduce verbosity.
  */
-public final class Constants {}
+public final class Constants {
+    public static final class LimelightConstants {
+        public static final double FORCE_OFF = 1;
+        public static final double FORCE_BLINK = 2;
+        public static final double FORCE_ON = 3;
+
+        public static final double VISION_PROCESSOR = 0;
+        public static final double DRIVER_CAMERA = 1;
+    }
+}

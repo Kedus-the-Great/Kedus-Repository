@@ -8,6 +8,8 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.LimelightConstants;
+
 
 public class LimelightSubsystem extends SubsystemBase {
   public static NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
@@ -19,8 +21,8 @@ public class LimelightSubsystem extends SubsystemBase {
 
   /** Creates a new LimelightSubsystem. */
   public LimelightSubsystem() {
-    limelightTable.getEntry("ledMode").setNumber(1);
-    limelightTable.getEntry("camMode").setNumber(2);
+    limelightTable.getEntry("ledMode").setNumber(LimelightConstants.FORCE_OFF);
+    limelightTable.getEntry("camMode").setNumber(LimelightConstants.DRIVER_CAMERA);
   }
 
   public static void getLimelightData() {
@@ -36,7 +38,30 @@ public class LimelightSubsystem extends SubsystemBase {
     return (Double) limelightTable.getEntry("ty").getDouble(0.0);
   }
   
+  public static void turn_LED_ON() {
+    limelightTable.getEntry("ledMode").setNumber(LimelightConstants.FORCE_ON);
+  }
 
+  public static void setVisionProcessor() {
+    limelightTable.getEntry("camMode").setNumber(LimelightConstants.VISION_PROCESSOR);
+  }
+
+  public static double getHorizontalDistance() {
+    double targetOffsetAngle_Vertical = getLimelightY();
+    double limelightMountAngleDegrees = 30;
+    double limelightHeight = 1.0922;
+    double goalHeight = 2.6416;
+    double angleToGoal = limelightMountAngleDegrees + targetOffsetAngle_Vertical;
+    double angleToGoalRadians = angleToGoal * (Math.PI / 180.00);
+    double distance = (goalHeight - limelightHeight)/Math.tan(angleToGoalRadians);
+    return distance;
+  }
+
+  public static boolean isWithinDistance() {
+    return (getHorizontalDistance() <= 5 && getHorizontalDistance() >= 1.7);
+  }
+
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
