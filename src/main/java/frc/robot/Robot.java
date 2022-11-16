@@ -80,6 +80,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putBoolean("Is Kedus Drippin?", true);
     SmartDashboard.putNumber("LIMELIGHT X OFFSET", LimelightSubsystem.getLimelightX());
     SmartDashboard.putNumber("LIMELIGHT Y OFFSET", LimelightSubsystem.getLimelightY());
+    SmartDashboard.putBoolean("WITHIN 1.7 TO 5 METERS?", LimelightSubsystem.isWithinDistance());
+    SmartDashboard.putNumber("Horizontal Distance", LimelightSubsystem.getHorizontalDistance());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
